@@ -1,11 +1,816 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Club Lunar — Gestión de redes sociales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F1E8DC;
+    --teal:#4B949C;
+    --grey:#A8B1B7;
+    --navy:#082944;
+    --ink:#111820;
+
+    --serif: 'Fraunces', serif;
+    --sans: 'Space Grotesk', sans-serif;
+
+    --wrap: 1180px;
+    --pad: clamp(24px, 5vw, 64px);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+
+  h1,h2,h3{
+    font-family:var(--serif);
+    font-weight:500;
+    margin:0;
+    color:var(--navy);
+    letter-spacing:-0.01em;
+  }
+
+  .wrap{
+    max-width:var(--wrap);
+    margin:0 auto;
+    padding-left:var(--pad);
+    padding-right:var(--pad);
+  }
+
+  section{padding:clamp(56px,10vw,120px) 0;}
+
+  :focus-visible{
+    outline:2px solid var(--teal);
+    outline-offset:3px;
+  }
+
+  /* ---------- botones ---------- */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:13px 26px;
+    border-radius:999px;
+    font-family:var(--sans);
+    font-size:0.95rem;
+    font-weight:500;
+    text-decoration:none;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:transform .15s ease, background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--teal); color:var(--cream);}
+  .btn-primary:hover{background:#3f7f86;}
+  .btn-ghost{background:transparent; border-color:var(--navy); color:var(--navy);}
+  .btn-ghost:hover{background:var(--navy); color:var(--cream);}
+  .btn-ghost-light{background:transparent; border-color:var(--cream); color:var(--cream);}
+  .btn-ghost-light:hover{background:var(--cream); color:var(--ink);}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(241,232,220,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(8,41,68,0.1);
+  }
+  .nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:18px;
+    padding-bottom:18px;
+  }
+  .logo{
+    font-family:var(--serif);
+    font-size:1.4rem;
+    font-weight:600;
+    color:var(--navy);
+    text-decoration:none;
+  }
+  .nav-links{
+    display:flex;
+    align-items:center;
+    gap:36px;
+    list-style:none;
+    margin:0; padding:0;
+  }
+  .nav-links a{
+    text-decoration:none;
+    color:var(--navy);
+    font-size:0.95rem;
+    position:relative;
+  }
+  .nav-links a::after{
+    content:'';
+    position:absolute; left:0; right:0; bottom:-4px;
+    height:1px; background:var(--teal);
+    transform:scaleX(0); transform-origin:left;
+    transition:transform .2s ease;
+  }
+  .nav-links a:hover::after{transform:scaleX(1);}
+  .nav-cta{display:flex; align-items:center; gap:28px;}
+  .menu-toggle{display:none; background:none; border:none; cursor:pointer; padding:6px;}
+  .menu-toggle span{display:block; width:24px; height:2px; background:var(--navy); margin:5px 0;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding-top:clamp(48px,8vw,90px);
+    padding-bottom:clamp(40px,7vw,70px);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:clamp(32px,5vw,60px);
+    align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(2.4rem, 4.6vw, 3.6rem);
+    line-height:1.08;
+  }
+  .hero p.lead{
+    margin-top:22px;
+    max-width:46ch;
+    font-size:1.08rem;
+    color:#2c3e4d;
+  }
+  .hero-actions{
+    margin-top:34px;
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+
+  .hero-orbit{
+    position:relative;
+    width:100%;
+    max-width:460px;
+    height:460px;
+    margin:0 auto;
+  }
+  .orbit-ring{
+    position:absolute;
+    top:50%; left:50%;
+    border-radius:50%;
+    border:1px dashed rgba(8,41,68,0.22);
+    transform:translate(-50%,-50%);
+  }
+  .ring-outer{ width:350px; height:350px; animation:spin-slow 90s linear infinite; }
+  .ring-inner{ width:210px; height:210px; animation:spin-slow-rev 70s linear infinite; }
+  @keyframes spin-slow{ from{transform:translate(-50%,-50%) rotate(0deg);} to{transform:translate(-50%,-50%) rotate(360deg);} }
+  @keyframes spin-slow-rev{ from{transform:translate(-50%,-50%) rotate(360deg);} to{transform:translate(-50%,-50%) rotate(0deg);} }
+
+  .moon-core{
+    position:absolute;
+    top:50%; left:50%;
+    width:112px; height:112px;
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(circle at 34% 30%, #fbf5ec, var(--cream) 65%);
+    box-shadow:0 0 0 1px rgba(8,41,68,0.1), 0 0 70px 14px rgba(75,148,156,0.28);
+  }
+  .moon-core::before, .moon-core::after{
+    content:'';
+    position:absolute;
+    border-radius:50%;
+    background:rgba(8,41,68,0.08);
+  }
+  .moon-core::before{ width:18px; height:18px; top:28px; left:24px; }
+  .moon-core::after{ width:11px; height:11px; top:64px; left:66px; }
+  .moon-core .crater{
+    position:absolute;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:rgba(8,41,68,0.08);
+    top:70px; left:30px;
+  }
+
+  .orbit-node{
+    position:absolute;
+    transform:translate(-50%,-50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:9px;
+    width:92px;
+  }
+  .phase-moon{
+    width:42px; height:42px;
+    border-radius:50%;
+    background:var(--navy);
+    position:relative;
+    overflow:hidden;
+    flex-shrink:0;
+    box-shadow:0 8px 18px -8px rgba(8,41,68,0.5);
+  }
+  .phase-moon::after{
+    content:'';
+    position:absolute;
+    top:0;
+    width:42px; height:42px;
+    border-radius:50%;
+    background:var(--cream);
+  }
+  .phase-new::after{ left:42px; }
+  .phase-crescent::after{ left:29px; }
+  .phase-half::after{ left:21px; }
+  .phase-gibbous::after{ left:9px; }
+  .phase-full::after{ left:0; }
+
+  .orbit-node .node-label{
+    text-align:center;
+    line-height:1.3;
+  }
+  .orbit-node .platform-name{
+    display:block;
+    font-family:var(--serif);
+    font-size:0.95rem;
+    color:var(--navy);
+  }
+  .orbit-node .platform-meta{
+    display:block;
+    font-size:0.72rem;
+    color:#4d6072;
+    margin-top:1px;
+  }
+
+  .hero-orbit-mobile{
+    display:none;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:22px 26px;
+    padding-top:8px;
+  }
+  .hero-orbit-mobile .orbit-node{
+    position:static;
+    transform:none;
+    width:78px;
+  }
+
+  /* ---------- ticker ---------- */
+  .ticker-strip{
+    border-top:1px solid rgba(8,41,68,0.12);
+    border-bottom:1px solid rgba(8,41,68,0.12);
+    overflow:hidden;
+    padding:18px 0;
+  }
+  .ticker-track{
+    display:flex;
+    gap:56px;
+    width:max-content;
+    animation:scroll-left 28s linear infinite;
+    font-family:var(--serif);
+    font-size:1.1rem;
+    color:var(--navy);
+    white-space:nowrap;
+  }
+  .ticker-track span::after{
+    content:'●';
+    font-size:0.4rem;
+    color:var(--teal);
+    margin-left:56px;
+    vertical-align:middle;
+  }
+  @keyframes scroll-left{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+
+  /* ---------- cómo trabajamos ---------- */
+  .como-trabajamos{
+    background:var(--cream);
+    border-top:1px solid rgba(8,41,68,0.12);
+  }
+  .section-head{
+    max-width:56ch;
+    margin-bottom:48px;
+  }
+  .section-head h2{
+    font-size:clamp(1.9rem,3.4vw,2.6rem);
+    margin-bottom:16px;
+  }
+  .section-head p{color:#2c3e4d;}
+
+  .plans{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+  }
+  .plan-card{
+    background:var(--navy);
+    color:var(--cream);
+    border-radius:22px;
+    padding:clamp(28px,3vw,40px);
+  }
+  .plan-card--pro{
+    background:var(--ink);
+    box-shadow:0 0 0 1px rgba(75,148,156,0.5) inset;
+  }
+  .plan-card h3{
+    color:var(--cream);
+    font-size:1.5rem;
+  }
+  .plan-card > p{
+    color:var(--grey);
+    margin-top:10px;
+  }
+  .plan-card ul{
+    list-style:none;
+    margin:24px 0 0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .plan-card li{
+    position:relative;
+    padding-left:22px;
+    font-size:0.94rem;
+    color:var(--cream);
+  }
+  .plan-card li::before{
+    content:'';
+    position:absolute;
+    left:0; top:7px;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--teal);
+  }
+  .plans-note{
+    margin-top:24px;
+    font-size:0.9rem;
+    color:#3d5064;
+  }
+
+  /* ---------- nosotros / stats ---------- */
+  .nosotros{
+    background:var(--cream);
+    border-top:1px solid rgba(8,41,68,0.12);
+  }
+  .nosotros .wrap{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:60px;
+    align-items:start;
+  }
+  .nosotros h2{
+    font-size:clamp(1.9rem,3.4vw,2.6rem);
+    margin-bottom:20px;
+  }
+  .nosotros p{
+    color:#2c3e4d;
+    max-width:48ch;
+  }
+  .nosotros p + p{margin-top:16px;}
+  .team-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+  }
+  .team-card{
+    background:rgba(8,41,68,0.04);
+    border:1px solid rgba(8,41,68,0.12);
+    border-radius:18px;
+    padding:24px 16px;
+    text-align:center;
+  }
+  .team-card .avatar{
+    width:54px; height:54px;
+    margin:0 auto 14px;
+    border-radius:50%;
+    background:var(--navy);
+    color:var(--cream);
+    font-family:var(--serif);
+    font-size:1rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .team-card h3{font-size:1rem;}
+  .team-card p{
+    margin-top:4px;
+    font-size:0.82rem;
+    color:#3d5064;
+    max-width:none;
+  }
+  .team-note{
+    margin-top:18px;
+    font-size:0.82rem;
+    color:#5c6d7d;
+    font-style:italic;
+  }
+
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:0;
+    position:relative;
+    margin-top:64px;
+  }
+  .steps::before{
+    content:'';
+    position:absolute;
+    top:11px; left:0; right:0;
+    height:1px;
+    background:rgba(8,41,68,0.2);
+  }
+  .step{
+    padding-right:24px;
+    position:relative;
+  }
+  .step .dot{
+    width:11px; height:11px; border-radius:50%;
+    background:var(--teal);
+    margin-bottom:22px;
+    position:relative; z-index:1;
+  }
+  .step h3{
+    font-size:1.15rem;
+    margin-bottom:8px;
+  }
+  .step p{
+    color:#3d5064;
+    font-size:0.92rem;
+    max-width:26ch;
+  }
+
+  /* ---------- contacto ---------- */
+  .contacto{
+    background:var(--ink);
+    color:var(--cream);
+  }
+  .contacto .wrap{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:64px;
+  }
+  .contacto h2{color:var(--cream); font-size:clamp(1.9rem,3.4vw,2.6rem);}
+  .contacto .sub{color:var(--grey); margin-top:14px; max-width:42ch;}
+  .contact-info{margin-top:40px;}
+  .contact-info dl{margin:0;}
+  .contact-info dt{
+    font-size:0.78rem;
+    color:var(--grey);
+    margin-top:22px;
+  }
+  .contact-info dt:first-child{margin-top:0;}
+  .contact-info dd{
+    margin:4px 0 0;
+    font-family:var(--serif);
+    font-size:1.2rem;
+    color:var(--cream);
+  }
+  .contact-quick{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:28px;
+  }
+
+  form{display:flex; flex-direction:column; gap:18px;}
+  .field{display:flex; flex-direction:column; gap:7px;}
+  .field label{font-size:0.85rem; color:var(--grey);}
+  .field input, .field textarea{
+    background:transparent;
+    border:none;
+    border-bottom:1px solid rgba(241,232,220,0.35);
+    padding:10px 2px;
+    font-family:var(--sans);
+    font-size:1rem;
+    color:var(--cream);
+  }
+  .field input:focus, .field textarea:focus{
+    border-color:var(--teal);
+    outline:none;
+  }
+  .field textarea{resize:vertical; min-height:90px;}
+  form .btn-primary{align-self:flex-start; margin-top:8px; border:none;}
+
+  /* ---------- footer ---------- */
+  footer{
+    background:var(--cream);
+    padding:36px 0;
+    border-top:1px solid rgba(8,41,68,0.12);
+  }
+  footer .wrap{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+  footer .logo{font-size:1.1rem;}
+  footer .foot-links{
+    display:flex;
+    gap:24px;
+    list-style:none;
+    padding:0; margin:0;
+    font-size:0.9rem;
+  }
+  footer .foot-links a{text-decoration:none;}
+  footer small{color:#3d5064; font-size:0.82rem;}
+
+  /* ---------- entrada de la hero (único momento animado) ---------- */
+  .hero h1, .hero p.lead, .hero-actions{
+    opacity:0;
+    animation:rise .7s ease forwards;
+  }
+  .hero h1{animation-delay:.05s;}
+  .hero p.lead{animation-delay:.15s;}
+  .hero-actions{animation-delay:.25s;}
+  @keyframes rise{
+    from{opacity:0; transform:translateY(14px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  .moon-core, .hero-orbit .orbit-node{
+    opacity:0;
+    animation:rise-centered .7s ease forwards;
+  }
+  .moon-core{animation-delay:.3s;}
+  .hero-orbit .orbit-node:nth-child(4){animation-delay:.4s;}
+  .hero-orbit .orbit-node:nth-child(5){animation-delay:.5s;}
+  @keyframes rise-centered{
+    from{opacity:0; transform:translate(-50%,-50%) translateY(14px);}
+    to{opacity:1; transform:translate(-50%,-50%) translateY(0);}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important; scroll-behavior:auto !important;}
+    .hero h1, .hero p.lead, .hero-actions{opacity:1; transform:none;}
+    .moon-core, .hero-orbit .orbit-node{opacity:1; transform:translate(-50%,-50%);}
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:900px){
+    .nav-links{
+      position:fixed; top:64px; left:0; right:0;
+      background:var(--cream);
+      flex-direction:column;
+      align-items:flex-start;
+      padding:24px var(--pad);
+      gap:20px;
+      border-bottom:1px solid rgba(8,41,68,0.1);
+      transform:translateY(-8px);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .2s ease, transform .2s ease;
+    }
+    .nav-links.open{opacity:1; transform:translateY(0); pointer-events:auto;}
+    .menu-toggle{display:block;}
+    .nav-cta .btn-ghost{display:none;}
+
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-orbit{display:none;}
+    .hero-orbit-mobile{display:flex;}
+
+    .plans{grid-template-columns:1fr;}
+    .team-grid{grid-template-columns:1fr 1fr;}
+    .nosotros .wrap{grid-template-columns:1fr;}
+    .steps{grid-template-columns:1fr 1fr; row-gap:36px;}
+    .steps::before{display:none;}
+    .contacto .wrap{grid-template-columns:1fr;}
+  }
+  @media (max-width:520px){
+    .steps{grid-template-columns:1fr;}
+    .team-grid{grid-template-columns:1fr;}
+  }
+</style>
 </head>
 <body>
-    
+
+<header>
+  <nav class="wrap nav">
+    <a href="#" class="logo">Club Lunar</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#nosotros">Quiénes somos</a></li>
+      <li><a href="#como-trabajamos">Cómo trabajamos</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#contacto" class="btn btn-ghost">Hablemos</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Contenido con ritmo.<br>Resultados con datos.</h1>
+      <p class="lead">Club Lunar gestiona tu Instagram y tu TikTok: contenido, comunidad y un plan pensado para lo que tu marca necesita ahora mismo.</p>
+      <div class="hero-actions">
+        <a href="#contacto" class="btn btn-primary">Hablar con el equipo</a>
+        <a href="#como-trabajamos" class="btn btn-ghost">Cómo trabajamos</a>
+      </div>
+    </div>
+    <div class="hero-orbit" aria-hidden="true">
+      <div class="orbit-ring ring-outer"></div>
+      <div class="orbit-ring ring-inner"></div>
+      <div class="moon-core"></div>
+
+      <div class="orbit-node" style="top:55px; left:230px;">
+        <div class="phase-moon phase-crescent"></div>
+        <span class="node-label"><span class="platform-name">Instagram</span><span class="platform-meta">contenido y comunidad</span></span>
+      </div>
+      <div class="orbit-node" style="top:405px; left:230px;">
+        <div class="phase-moon phase-full"></div>
+        <span class="node-label"><span class="platform-name">TikTok</span><span class="platform-meta">vídeo corto</span></span>
+      </div>
+    </div>
+
+    <div class="hero-orbit-mobile" aria-hidden="true">
+      <div class="orbit-node"><div class="phase-moon phase-crescent"></div><span class="node-label"><span class="platform-name">Instagram</span></span></div>
+      <div class="orbit-node"><div class="phase-moon phase-full"></div><span class="node-label"><span class="platform-name">TikTok</span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- <div class="ticker-strip" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Instagram</span><span>TikTok</span><span>Instagram</span><span>TikTok</span>
+    <span>Instagram</span><span>TikTok</span><span>Instagram</span><span>TikTok</span>
+  </div>
+</div> -->
+
+<section id="nosotros" class="nosotros">
+  <div class="wrap">
+    <div>
+      <h2>Un equipo dedicado a las redes sociales de otras marcas</h2>
+      <p>Club Lunar nació de las ganas de un grupo de personas de dedicarse por completo a la gestión de redes sociales: esa tarea que casi toda empresa sabe que importa, pero para la que rara vez sobra tiempo dentro del equipo.</p>
+      <p>Nos centramos en Instagram y TikTok para poder dedicarles atención de verdad, en lugar de repartir el esfuerzo entre demasiadas plataformas a la vez.</p>
+    </div>
+    <div>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="avatar">EL</div>
+          <h3>Elena Ruiz</h3>
+          <p>Estrategia y contenido</p>
+        </div>
+        <div class="team-card">
+          <div class="avatar">MV</div>
+          <h3>Marcos Vidal</h3>
+          <p>Producción audiovisual</p>
+        </div>
+        <div class="team-card">
+          <div class="avatar">SA</div>
+          <h3>Sofía Andrade</h3>
+          <p>Gestión de comunidad</p>
+        </div>
+      </div>
+      <p class="team-note">Próximamente añadiremos aquí las fotos del equipo.</p>
+    </div>
+  </div>
+</section>
+
+<section id="como-trabajamos" class="como-trabajamos">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Cómo trabajamos</h2>
+      <p>Trabajamos con Instagram y TikTok. Antes de nada, nos reunimos contigo, en persona o por videollamada, para ver qué necesita tu marca y qué plan se ajusta mejor.</p>
+    </div>
+
+    <div class="plans">
+      <div class="plan-card">
+        <h3>Plan Básico</h3>
+        <p>Para quien quiere empezar a cuidar su presencia en redes sin dar un salto muy grande.</p>
+        <ul>
+          <li>Gestión de una plataforma, Instagram o TikTok</li>
+          <li>Calendario de contenido mensual</li>
+          <li>Publicación y moderación de comentarios</li>
+          <li>Informe mensual sencillo</li>
+        </ul>
+      </div>
+      <div class="plan-card plan-card--pro">
+        <h3>Plan Profesional</h3>
+        <p>Para marcas que quieren una gestión más completa en ambas plataformas.</p>
+        <ul>
+          <li>Gestión de Instagram y TikTok</li>
+          <li>Producción de contenido: fotografía y vídeo corto</li>
+          <li>Gestión de comunidad diaria</li>
+          <li>Reunión de seguimiento mensual</li>
+          <li>Informe detallado con propuestas de mejora</li>
+        </ul>
+      </div>
+    </div>
+    <p class="plans-note">Estos planes son un punto de partida: siempre los ajustamos a lo que necesita cada cliente.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="dot"></div>
+        <h3>Reunión inicial</h3>
+        <p>Hablamos contigo para entender tu marca y qué esperas de tus redes.</p>
+      </div>
+      <div class="step">
+        <div class="dot"></div>
+        <h3>Plan a medida</h3>
+        <p>Te proponemos el plan que mejor encaja y lo adaptamos si hace falta.</p>
+      </div>
+      <div class="step">
+        <div class="dot"></div>
+        <h3>Producción y publicación</h3>
+        <p>Creamos el contenido y lo publicamos según lo acordado.</p>
+      </div>
+      <div class="step">
+        <div class="dot"></div>
+        <h3>Seguimiento</h3>
+        <p>Revisamos los resultados contigo y ajustamos lo que sea necesario.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" class="contacto">
+  <div class="wrap">
+    <div>
+      <h2>Hablemos de tu marca</h2>
+      <p class="sub">Cuéntanos en qué punto estás y qué tipo de ayuda buscas. También puedes escribirnos o llamarnos directamente.</p>
+      <div class="contact-info">
+        <dl>
+          <dt>Correo</dt>
+          <dd>hola@clublunar.es</dd>
+          <dt>Teléfono</dt>
+          <dd>+34 611 22 33 44</dd>
+        </dl>
+        <div class="contact-quick">
+          <a href="tel:+34611223344" class="btn btn-ghost-light">Llamar</a>
+          <a href="https://wa.me/34611223344" class="btn btn-ghost-light">Escribir por WhatsApp</a>
+        </div>
+      </div>
+    </div>
+    <form id="contactForm">
+      <div class="field">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="email">Correo electrónico</label>
+        <input type="email" id="email" name="email" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="telefono">Teléfono (opcional)</label>
+        <input type="tel" id="telefono" name="telefono" autocomplete="tel">
+      </div>
+      <div class="field">
+        <label for="empresa">Empresa (opcional)</label>
+        <input type="text" id="empresa" name="empresa" autocomplete="organization">
+      </div>
+      <div class="field">
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje" name="mensaje" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a href="#" class="logo">Club Lunar</a>
+    <ul class="foot-links">
+      <li><a href="#nosotros">Quiénes somos</a></li>
+      <li><a href="#como-trabajamos">Cómo trabajamos</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <small>© 2026 Club Lunar. Todos los derechos reservados.</small>
+  </div>
+</footer>
+
+<script>
+  const toggle = document.getElementById('menuToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+  });
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    links.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }));
+
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const btn = this.querySelector('button[type="submit"]');
+    btn.textContent = 'Mensaje enviado';
+    btn.disabled = true;
+    this.reset();
+  });
+</script>
+
 </body>
 </html>
