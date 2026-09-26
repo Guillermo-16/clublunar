@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Club Lunar — Gestión de redes sociales</title>
+<title>Club Lunar — Social Media & Creative Studio</title>
+<link rel="icon" type="image/png" href="Resources/icono.png">
+<link rel="shortcut icon" href="Resources/icono.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --cream:#F1E8DC;
@@ -15,8 +17,9 @@
     --navy:#082944;
     --ink:#111820;
 
-    --serif: 'Fraunces', serif;
-    --sans: 'Space Grotesk', sans-serif;
+    --serif: 'Cormorant Garamond', serif;
+    --display: 'Cinzel', serif;
+    --sans: 'Montserrat', sans-serif;
 
     --wrap: 1180px;
     --pad: clamp(24px, 5vw, 64px);
@@ -37,7 +40,7 @@
 
   h1,h2,h3{
     font-family:var(--serif);
-    font-weight:500;
+    font-weight:600;
     margin:0;
     color:var(--navy);
     letter-spacing:-0.01em;
@@ -95,16 +98,20 @@
     padding-bottom:18px;
   }
   .logo{
-    font-family:var(--serif);
-    font-size:1.4rem;
-    font-weight:600;
-    color:var(--navy);
+    display:inline-flex;
+    align-items:center;
     text-decoration:none;
+  }
+  .logo img{
+    display:block;
+    height:180px;      /* tamaño visual del logo: sube o baja este número */
+    width:auto;
+    margin:-75px 0;   /* compensa la altura extra para que el header no crezca */
   }
   .nav-links{
     display:flex;
     align-items:center;
-    gap:36px;
+    gap:28px;
     list-style:none;
     margin:0; padding:0;
   }
@@ -130,6 +137,9 @@
   .hero{
     padding-top:clamp(48px,8vw,90px);
     padding-bottom:clamp(40px,7vw,70px);
+    background:
+      linear-gradient(165deg, rgba(17,24,32,0.78) 0%, rgba(8,41,68,0.68) 55%, rgba(13,58,92,0.55) 100%),
+      url('Resources/Textura 3.png') center/cover no-repeat;
   }
   .hero-grid{
     display:grid;
@@ -137,15 +147,26 @@
     gap:clamp(32px,5vw,60px);
     align-items:center;
   }
+  .eyebrow{
+    display:block;
+    font-family:var(--display);
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.2em;
+    font-size:0.72rem;
+    color:var(--teal);
+    margin-bottom:16px;
+  }
   .hero h1{
     font-size:clamp(2.4rem, 4.6vw, 3.6rem);
     line-height:1.08;
+    color:var(--cream);
   }
   .hero p.lead{
     margin-top:22px;
     max-width:46ch;
     font-size:1.08rem;
-    color:#2c3e4d;
+    color:var(--grey);
   }
   .hero-actions{
     margin-top:34px;
@@ -165,7 +186,7 @@
     position:absolute;
     top:50%; left:50%;
     border-radius:50%;
-    border:1px dashed rgba(8,41,68,0.22);
+    border:1px dashed rgba(241,232,220,0.28);
     transform:translate(-50%,-50%);
   }
   .ring-outer{ width:350px; height:350px; animation:spin-slow 90s linear infinite; }
@@ -180,7 +201,7 @@
     border-radius:50%;
     transform:translate(-50%,-50%);
     background:radial-gradient(circle at 34% 30%, #fbf5ec, var(--cream) 65%);
-    box-shadow:0 0 0 1px rgba(8,41,68,0.1), 0 0 70px 14px rgba(75,148,156,0.28);
+    box-shadow:0 0 0 1px rgba(241,232,220,0.15), 0 0 80px 18px rgba(75,148,156,0.4);
   }
   .moon-core::before, .moon-core::after{
     content:'';
@@ -214,7 +235,7 @@
     position:relative;
     overflow:hidden;
     flex-shrink:0;
-    box-shadow:0 8px 18px -8px rgba(8,41,68,0.5);
+    box-shadow:0 0 0 1px rgba(241,232,220,0.3), 0 8px 18px -6px rgba(0,0,0,0.5);
   }
   .phase-moon::after{
     content:'';
@@ -238,12 +259,12 @@
     display:block;
     font-family:var(--serif);
     font-size:0.95rem;
-    color:var(--navy);
+    color:var(--cream);
   }
   .orbit-node .platform-meta{
     display:block;
     font-size:0.72rem;
-    color:#4d6072;
+    color:var(--grey);
     margin-top:1px;
   }
 
@@ -260,42 +281,13 @@
     width:78px;
   }
 
-  /* ---------- ticker ---------- */
-  .ticker-strip{
-    border-top:1px solid rgba(8,41,68,0.12);
-    border-bottom:1px solid rgba(8,41,68,0.12);
-    overflow:hidden;
-    padding:18px 0;
-  }
-  .ticker-track{
-    display:flex;
-    gap:56px;
-    width:max-content;
-    animation:scroll-left 28s linear infinite;
-    font-family:var(--serif);
-    font-size:1.1rem;
-    color:var(--navy);
-    white-space:nowrap;
-  }
-  .ticker-track span::after{
-    content:'●';
-    font-size:0.4rem;
-    color:var(--teal);
-    margin-left:56px;
-    vertical-align:middle;
-  }
-  @keyframes scroll-left{
-    from{transform:translateX(0);}
-    to{transform:translateX(-50%);}
-  }
-
-  /* ---------- cómo trabajamos ---------- */
-  .como-trabajamos{
+  /* ---------- cómo trabajamos / packs ---------- */
+  .como-trabajamos, .packs-section{
     background:var(--cream);
     border-top:1px solid rgba(8,41,68,0.12);
   }
   .section-head{
-    max-width:56ch;
+    max-width:64ch;
     margin-bottom:48px;
   }
   .section-head h2{
@@ -306,14 +298,14 @@
 
   .plans{
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:repeat(3,1fr);
     gap:24px;
   }
   .plan-card{
     background:var(--navy);
     color:var(--cream);
     border-radius:22px;
-    padding:clamp(28px,3vw,40px);
+    padding:clamp(26px,2.6vw,34px);
   }
   .plan-card--pro{
     background:var(--ink);
@@ -321,7 +313,14 @@
   }
   .plan-card h3{
     color:var(--cream);
-    font-size:1.5rem;
+    font-size:1.35rem;
+  }
+  .plan-card .plan-price{
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:0.95rem;
+    color:var(--teal);
+    margin-top:8px;
   }
   .plan-card > p{
     color:var(--grey);
@@ -329,7 +328,7 @@
   }
   .plan-card ul{
     list-style:none;
-    margin:24px 0 0;
+    margin:22px 0 0;
     padding:0;
     display:flex;
     flex-direction:column;
@@ -338,7 +337,7 @@
   .plan-card li{
     position:relative;
     padding-left:22px;
-    font-size:0.94rem;
+    font-size:0.9rem;
     color:var(--cream);
   }
   .plan-card li::before{
@@ -355,29 +354,35 @@
     color:#3d5064;
   }
 
-  /* ---------- nosotros / stats ---------- */
-  .nosotros{
-    background:var(--cream);
-    border-top:1px solid rgba(8,41,68,0.12);
-  }
+  /* ---------- nosotros / equipo ---------- */
   .nosotros .wrap{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:60px;
-    align-items:start;
+    gap:48px 60px;
   }
-  .nosotros h2{
-    font-size:clamp(1.9rem,3.4vw,2.6rem);
-    margin-bottom:20px;
+  .intro-col h2{
+    font-size:clamp(1.7rem,3vw,2.2rem);
+    margin-bottom:18px;
   }
-  .nosotros p{
+  .intro-col p{
     color:#2c3e4d;
     max-width:48ch;
   }
-  .nosotros p + p{margin-top:16px;}
+  .intro-col p + p{margin-top:14px;}
+
+  .team-block{
+    grid-column:1 / -1;
+    margin-top:8px;
+    padding-top:40px;
+    border-top:1px solid rgba(8,41,68,0.12);
+  }
+  .team-heading{
+    font-size:clamp(1.5rem,2.4vw,1.9rem);
+    margin-bottom:28px;
+  }
   .team-grid{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(4,1fr);
     gap:16px;
   }
   .team-card{
@@ -402,7 +407,7 @@
   .team-card h3{font-size:1rem;}
   .team-card p{
     margin-top:4px;
-    font-size:0.82rem;
+    font-size:0.8rem;
     color:#3d5064;
     max-width:none;
   }
@@ -413,9 +418,33 @@
     font-style:italic;
   }
 
+  /* ---------- servicios ---------- */
+  .servicios-section{
+    background:var(--cream);
+    border-top:1px solid rgba(8,41,68,0.12);
+  }
+  .services-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:32px 48px;
+  }
+  .service-item{
+    padding-bottom:22px;
+    border-bottom:1px solid rgba(8,41,68,0.12);
+  }
+  .service-item h3{
+    font-size:1.15rem;
+    margin-bottom:8px;
+  }
+  .service-item p{
+    color:#3d5064;
+    font-size:0.92rem;
+    max-width:42ch;
+  }
+
   .steps{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns:repeat(5,1fr);
     gap:0;
     position:relative;
     margin-top:64px;
@@ -428,7 +457,7 @@
     background:rgba(8,41,68,0.2);
   }
   .step{
-    padding-right:24px;
+    padding-right:20px;
     position:relative;
   }
   .step .dot{
@@ -438,13 +467,13 @@
     position:relative; z-index:1;
   }
   .step h3{
-    font-size:1.15rem;
+    font-size:1.02rem;
     margin-bottom:8px;
   }
   .step p{
     color:#3d5064;
-    font-size:0.92rem;
-    max-width:26ch;
+    font-size:0.88rem;
+    max-width:24ch;
   }
 
   /* ---------- contacto ---------- */
@@ -512,7 +541,7 @@
     flex-wrap:wrap;
     gap:16px;
   }
-  footer .logo{font-size:1.1rem;}
+  footer .logo img{height:180px; margin:-75px 0;}
   footer .foot-links{
     display:flex;
     gap:24px;
@@ -521,13 +550,16 @@
     font-size:0.9rem;
   }
   footer .foot-links a{text-decoration:none;}
+  .footer-meta{display:flex; flex-direction:column; align-items:flex-end; gap:4px;}
   footer small{color:#3d5064; font-size:0.82rem;}
+  .footer-tagline{font-family:var(--serif); font-style:italic; font-size:0.9rem; color:var(--navy);}
 
   /* ---------- entrada de la hero (único momento animado) ---------- */
-  .hero h1, .hero p.lead, .hero-actions{
+  .eyebrow, .hero h1, .hero p.lead, .hero-actions{
     opacity:0;
     animation:rise .7s ease forwards;
   }
+  .eyebrow{animation-delay:0s;}
   .hero h1{animation-delay:.05s;}
   .hero p.lead{animation-delay:.15s;}
   .hero-actions{animation-delay:.25s;}
@@ -550,7 +582,7 @@
 
   @media (prefers-reduced-motion: reduce){
     *{animation:none !important; transition:none !important; scroll-behavior:auto !important;}
-    .hero h1, .hero p.lead, .hero-actions{opacity:1; transform:none;}
+    .eyebrow, .hero h1, .hero p.lead, .hero-actions{opacity:1; transform:none;}
     .moon-core, .hero-orbit .orbit-node{opacity:1; transform:translate(-50%,-50%);}
   }
 
@@ -578,6 +610,7 @@
     .hero-orbit-mobile{display:flex;}
 
     .plans{grid-template-columns:1fr;}
+    .services-grid{grid-template-columns:1fr;}
     .team-grid{grid-template-columns:1fr 1fr;}
     .nosotros .wrap{grid-template-columns:1fr;}
     .steps{grid-template-columns:1fr 1fr; row-gap:36px;}
@@ -594,10 +627,14 @@
 
 <header>
   <nav class="wrap nav">
-    <a href="#" class="logo">Club Lunar</a>
+    <a href="#" class="logo" aria-label="Club Lunar — inicio">
+      <img src="Resources/logo.png" alt="Club Lunar">
+    </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#nosotros">Quiénes somos</a></li>
-      <li><a href="#como-trabajamos">Cómo trabajamos</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#como-trabajamos">Método</a></li>
+      <li><a href="#packs">Packs</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
     <div class="nav-cta">
@@ -612,11 +649,12 @@
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <h1>Contenido con ritmo.<br>Resultados con datos.</h1>
-      <p class="lead">Club Lunar gestiona tu Instagram y tu TikTok: contenido, comunidad y un plan pensado para lo que tu marca necesita ahora mismo.</p>
+      <span class="eyebrow">Social Media &amp; Creative Studio</span>
+      <h1>Tu marca bajo otra luz.</h1>
+      <p class="lead">Estrategia, contenido y creatividad para marcas que quieren ser recordadas.</p>
       <div class="hero-actions">
         <a href="#contacto" class="btn btn-primary">Hablar con el equipo</a>
-        <a href="#como-trabajamos" class="btn btn-ghost">Cómo trabajamos</a>
+        <a href="#como-trabajamos" class="btn btn-ghost-light">Cómo trabajamos</a>
       </div>
     </div>
     <div class="hero-orbit" aria-hidden="true">
@@ -641,39 +679,89 @@
   </div>
 </section>
 
-<!-- <div class="ticker-strip" aria-hidden="true">
-  <div class="ticker-track">
-    <span>Instagram</span><span>TikTok</span><span>Instagram</span><span>TikTok</span>
-    <span>Instagram</span><span>TikTok</span><span>Instagram</span><span>TikTok</span>
-  </div>
-</div> -->
-
 <section id="nosotros" class="nosotros">
   <div class="wrap">
-    <div>
-      <h2>Un equipo dedicado a las redes sociales de otras marcas</h2>
-      <p>Club Lunar nació de las ganas de un grupo de personas de dedicarse por completo a la gestión de redes sociales: esa tarea que casi toda empresa sabe que importa, pero para la que rara vez sobra tiempo dentro del equipo.</p>
-      <p>Nos centramos en Instagram y TikTok para poder dedicarles atención de verdad, en lugar de repartir el esfuerzo entre demasiadas plataformas a la vez.</p>
+    <div class="intro-col">
+      <h2>¿Quiénes somos?</h2>
+      <p>Club Lunar es un estudio creativo creado por cuatro socios, especializado en marketing, redes sociales, creación de contenido y producción audiovisual.</p>
+      <p>Ayudamos a marcas y negocios a construir una presencia digital sólida a través de una estrategia clara, contenido visual de calidad y una gestión pensada para conectar con su público.</p>
+      <p>No buscamos simplemente llenar un feed. Creamos contenido con intención, identidad y estrategia.</p>
     </div>
-    <div>
+    <div class="intro-col">
+      <h2>¿Qué hacemos?</h2>
+      <p>Combinamos estrategia, creación de contenido, producción audiovisual y gestión de redes sociales para desarrollar una comunicación coherente con la identidad y los objetivos de cada marca.</p>
+      <p>Nos encargamos de todo el proceso: pensamos la estrategia, desarrollamos las ideas, producimos el contenido y gestionamos su publicación y evolución.</p>
+      <p>Cada proyecto es diferente, por eso buscamos soluciones adaptadas a cada cliente, cuidando tanto la imagen como el mensaje y los resultados.</p>
+    </div>
+
+    <div class="team-block">
+      <h3 class="team-heading">Nuestro equipo</h3>
       <div class="team-grid">
         <div class="team-card">
-          <div class="avatar">EL</div>
-          <h3>Elena Ruiz</h3>
-          <p>Estrategia y contenido</p>
+          <div class="avatar">DH</div>
+          <h3>Duygu Hajizada</h3>
+          <p>Community Manager · Diseño de interiores · Client Relations</p>
         </div>
         <div class="team-card">
-          <div class="avatar">MV</div>
-          <h3>Marcos Vidal</h3>
-          <p>Producción audiovisual</p>
+          <div class="avatar">NT</div>
+          <h3>Noa Torres Ortega</h3>
+          <p>Community Manager · Marketing · Client Relations</p>
         </div>
         <div class="team-card">
-          <div class="avatar">SA</div>
-          <h3>Sofía Andrade</h3>
-          <p>Gestión de comunidad</p>
+          <div class="avatar">OR</div>
+          <h3>Obryan Rodriguez</h3>
+          <p>Fotografía · Dirección visual · Contenido de marca</p>
+        </div>
+        <div class="team-card">
+          <div class="avatar">LG</div>
+          <h3>Leonardo Guevara Ardua</h3>
+          <p>Filmmaker y editor de vídeo</p>
         </div>
       </div>
       <p class="team-note">Próximamente añadiremos aquí las fotos del equipo.</p>
+    </div>
+  </div>
+</section>
+
+<section id="servicios" class="servicios-section">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Nuestros servicios</h2>
+      <p>Todo lo que puede necesitar la presencia digital de tu marca, en un mismo equipo.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-item">
+        <h3>Marketing &amp; Estrategia Digital</h3>
+        <p>Desarrollo de estrategias para mejorar la presencia, comunicación y posicionamiento digital de cada marca.</p>
+      </div>
+      <div class="service-item">
+        <h3>Social Media Management</h3>
+        <p>Estrategia, planificación, gestión y publicación de contenido en redes sociales.</p>
+      </div>
+      <div class="service-item">
+        <h3>Creación de Contenido</h3>
+        <p>Desarrollo de contenido creativo adaptado a la identidad, público y objetivos de cada marca.</p>
+      </div>
+      <div class="service-item">
+        <h3>Fotografía Profesional</h3>
+        <p>Fotografía para marcas, productos, espacios, eventos y redes sociales.</p>
+      </div>
+      <div class="service-item">
+        <h3>Producción Audiovisual</h3>
+        <p>Grabación y edición de vídeos, reels y contenido audiovisual para diferentes plataformas.</p>
+      </div>
+      <div class="service-item">
+        <h3>Diseño Gráfico</h3>
+        <p>Creación de piezas visuales para redes sociales, campañas y comunicación de marca.</p>
+      </div>
+      <div class="service-item">
+        <h3>Branding &amp; Rebranding</h3>
+        <p>Creación o renovación de la identidad visual para conseguir una imagen coherente y reconocible.</p>
+      </div>
+      <div class="service-item">
+        <h3>Cobertura de Eventos</h3>
+        <p>Fotografía, vídeo y creación de contenido para eventos, experiencias y acciones de marca.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -682,56 +770,82 @@
   <div class="wrap">
     <div class="section-head">
       <h2>Cómo trabajamos</h2>
-      <p>Trabajamos con Instagram y TikTok. Antes de nada, nos reunimos contigo, en persona o por videollamada, para ver qué necesita tu marca y qué plan se ajusta mejor.</p>
+      <p>Un proceso claro para convertir una idea en contenido que funciona. Todo empieza con una reunión para conocer tu marca.</p>
     </div>
-
-    <div class="plans">
-      <div class="plan-card">
-        <h3>Plan Básico</h3>
-        <p>Para quien quiere empezar a cuidar su presencia en redes sin dar un salto muy grande.</p>
-        <ul>
-          <li>Gestión de una plataforma, Instagram o TikTok</li>
-          <li>Calendario de contenido mensual</li>
-          <li>Publicación y moderación de comentarios</li>
-          <li>Informe mensual sencillo</li>
-        </ul>
-      </div>
-      <div class="plan-card plan-card--pro">
-        <h3>Plan Profesional</h3>
-        <p>Para marcas que quieren una gestión más completa en ambas plataformas.</p>
-        <ul>
-          <li>Gestión de Instagram y TikTok</li>
-          <li>Producción de contenido: fotografía y vídeo corto</li>
-          <li>Gestión de comunidad diaria</li>
-          <li>Reunión de seguimiento mensual</li>
-          <li>Informe detallado con propuestas de mejora</li>
-        </ul>
-      </div>
-    </div>
-    <p class="plans-note">Estos planes son un punto de partida: siempre los ajustamos a lo que necesita cada cliente.</p>
 
     <div class="steps">
       <div class="step">
         <div class="dot"></div>
-        <h3>Reunión inicial</h3>
-        <p>Hablamos contigo para entender tu marca y qué esperas de tus redes.</p>
+        <h3>01 — Analizamos</h3>
+        <p>Conocemos tu marca, tu público, tus objetivos y estudiamos qué necesita tu presencia digital.</p>
       </div>
       <div class="step">
         <div class="dot"></div>
-        <h3>Plan a medida</h3>
-        <p>Te proponemos el plan que mejor encaja y lo adaptamos si hace falta.</p>
+        <h3>02 — Estrategizamos</h3>
+        <p>Definimos qué comunicar, cómo hacerlo y creamos una estrategia adaptada a tu marca.</p>
       </div>
       <div class="step">
         <div class="dot"></div>
-        <h3>Producción y publicación</h3>
-        <p>Creamos el contenido y lo publicamos según lo acordado.</p>
+        <h3>03 — Creamos</h3>
+        <p>Desarrollamos las ideas y producimos el contenido: fotografía, vídeo, diseño y piezas para redes sociales.</p>
       </div>
       <div class="step">
         <div class="dot"></div>
-        <h3>Seguimiento</h3>
-        <p>Revisamos los resultados contigo y ajustamos lo que sea necesario.</p>
+        <h3>04 — Publicamos</h3>
+        <p>Planificamos, gestionamos y publicamos el contenido en las plataformas adecuadas.</p>
+      </div>
+      <div class="step">
+        <div class="dot"></div>
+        <h3>05 — Medimos</h3>
+        <p>Analizamos los resultados para entender qué funciona, optimizar la estrategia y seguir creciendo.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="packs" class="packs-section">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Packs</h2>
+      <p>Cada marca tiene necesidades, objetivos y ritmos diferentes. Nuestros packs son totalmente personalizables y se adaptan al tipo de contenido, las plataformas, la frecuencia de publicación y los servicios que necesite cada proyecto. Estas tres modalidades son el punto de partida.</p>
+    </div>
+
+    <div class="plans">
+      <div class="plan-card">
+        <h3>Mantenimiento</h3>
+        <p class="plan-price">Desde 430 €/mes</p>
+        <p>Para marcas que buscan mantener una presencia digital activa y cuidada.</p>
+        <ul>
+          <li>Gestión de Instagram</li>
+          <li>Creación de contenido personalizado</li>
+          <li>Diseño gráfico básico</li>
+          <li>Condiciones especiales para cobertura de eventos</li>
+        </ul>
+      </div>
+      <div class="plan-card plan-card--pro">
+        <h3>Crecimiento</h3>
+        <p class="plan-price">Desde 550 €/mes</p>
+        <p>Para marcas que quieren potenciar su presencia y publicar de forma más constante.</p>
+        <ul>
+          <li>Gestión de Instagram y TikTok</li>
+          <li>Creación de contenido especializado</li>
+          <li>Diseño gráfico</li>
+          <li>Cobertura de eventos</li>
+        </ul>
+      </div>
+      <div class="plan-card">
+        <h3>Integral</h3>
+        <p class="plan-price">Desde 690 €/mes</p>
+        <p>Nuestra opción más completa, para una gestión global de la presencia digital.</p>
+        <ul>
+          <li>Instagram, TikTok y LinkedIn</li>
+          <li>Contenido especializado y diseño gráfico</li>
+          <li>Cobertura de eventos y campañas de LinkedIn</li>
+          <li>Producción de vídeo premium</li>
+        </ul>
+      </div>
+    </div>
+    <p class="plans-note">Estos packs sirven como base: cada propuesta se adapta de forma personalizada según las necesidades y objetivos de cada cliente.</p>
   </div>
 </section>
 
@@ -781,13 +895,20 @@
 
 <footer>
   <div class="wrap">
-    <a href="#" class="logo">Club Lunar</a>
+    <a href="#" class="logo" aria-label="Club Lunar — inicio">
+      <img src="Resources/logo.png" alt="Club Lunar">
+    </a>
     <ul class="foot-links">
       <li><a href="#nosotros">Quiénes somos</a></li>
-      <li><a href="#como-trabajamos">Cómo trabajamos</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#como-trabajamos">Método</a></li>
+      <li><a href="#packs">Packs</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
-    <small>© 2026 Club Lunar. Todos los derechos reservados.</small>
+    <div class="footer-meta">
+      <small class="footer-tagline">Tu marca bajo otra luz.</small>
+      <small>© 2026 Club Lunar. Todos los derechos reservados.</small>
+    </div>
   </div>
 </footer>
 
