@@ -39,11 +39,12 @@
   a{color:inherit;}
 
   h1,h2,h3{
-    font-family:var(--serif);
+    font-family:var(--display);
     font-weight:600;
     margin:0;
     color:var(--navy);
     letter-spacing:-0.01em;
+    font-weight:bold;
   }
 
   .wrap{
@@ -139,7 +140,7 @@
     padding-bottom:clamp(40px,7vw,70px);
     background:
       linear-gradient(165deg, rgba(17,24,32,0.78) 0%, rgba(8,41,68,0.68) 55%, rgba(13,58,92,0.55) 100%),
-      url('Resources/Textura 3.png') center/cover no-repeat;
+      url('Resources/Textura 5.png') center/cover no-repeat;
   }
   .hero-grid{
     display:grid;
@@ -156,6 +157,7 @@
     font-size:0.72rem;
     color:var(--teal);
     margin-bottom:16px;
+    font-weight:bold;
   }
   .hero h1{
     font-size:clamp(2.4rem, 4.6vw, 3.6rem);
@@ -302,12 +304,16 @@
     gap:24px;
   }
   .plan-card{
-    background:var(--navy);
+    background:var(--teal);
     color:var(--cream);
     border-radius:22px;
     padding:clamp(26px,2.6vw,34px);
   }
   .plan-card--pro{
+    background:var(--navy);
+    box-shadow:0 0 0 1px rgba(75,148,156,0.5) inset;
+  }
+  .plan-card--integral{
     background:var(--ink);
     box-shadow:0 0 0 1px rgba(75,148,156,0.5) inset;
   }
@@ -319,7 +325,7 @@
     font-family:var(--sans);
     font-weight:600;
     font-size:0.95rem;
-    color:var(--teal);
+    color:var(--grey);
     margin-top:8px;
   }
   .plan-card > p{
@@ -346,7 +352,7 @@
     left:0; top:7px;
     width:8px; height:8px;
     border-radius:50%;
-    background:var(--teal);
+    background:var(--grey);
   }
   .plans-note{
     margin-top:24px;
@@ -552,7 +558,7 @@
   footer .foot-links a{text-decoration:none;}
   .footer-meta{display:flex; flex-direction:column; align-items:flex-end; gap:4px;}
   footer small{color:#3d5064; font-size:0.82rem;}
-  .footer-tagline{font-family:var(--serif); font-style:italic; font-size:0.9rem; color:var(--navy);}
+  .footer-tagline{font-family:var(--display); font-style:italic; font-size:0.9rem; color:var(--navy); font-weight:bold;}
 
   /* ---------- entrada de la hero (único momento animado) ---------- */
   .eyebrow, .hero h1, .hero p.lead, .hero-actions{
@@ -833,7 +839,7 @@
           <li>Cobertura de eventos</li>
         </ul>
       </div>
-      <div class="plan-card">
+      <div class="plan-card plan-card--integral">
         <h3>Integral</h3>
         <p class="plan-price">Desde 690 €/mes</p>
         <p>Nuestra opción más completa, para una gestión global de la presencia digital.</p>
@@ -857,7 +863,7 @@
       <div class="contact-info">
         <dl>
           <dt>Correo</dt>
-          <dd>hola@clublunar.es</dd>
+          <dd>info@clublunar.es</dd>
           <dt>Teléfono</dt>
           <dd>+34 611 22 33 44</dd>
         </dl>
@@ -907,7 +913,7 @@
     </ul>
     <div class="footer-meta">
       <small class="footer-tagline">Tu marca bajo otra luz.</small>
-      <small>© 2026 Club Lunar. Todos los derechos reservados.</small>
+      <small class="copy">© 2026 Club Lunar. Todos los derechos reservados.</small>
     </div>
   </div>
 </footer>
